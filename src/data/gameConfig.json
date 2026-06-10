@@ -1,0 +1,14 @@
+{
+  "title": "Where Is Pessy?",
+  "version": "0.69",
+  "defaultLanguage": "US",
+  "supportedLanguages": ["US", "UK"],
+  "primaryResolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "minimumResolution": {
+    "width": 1280,
+    "height": 720
+  }
+}

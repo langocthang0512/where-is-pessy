@@ -1,0 +1,211 @@
+{
+  "NEW_GAME": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_01"
+    }
+  },
+  "CONTINUE": {
+    "scene": "VNScene"
+  },
+  "CREDITS": {
+    "scene": "CreditsScene"
+  },
+  "RETURN_TO_MENU": {
+    "scene": "MainMenuScene"
+  },
+  "VN_01": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_02"
+    }
+  },
+  "VN_02": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_03"
+    }
+  },
+  "VN_03": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_04"
+    }
+  },
+  "VN_04": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BLACKJACK_ROUND_1"
+    }
+  },
+  "BLACKJACK_ROUND_1": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_05"
+    }
+  },
+  "VN_05": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BLACKJACK_ROUND_2"
+    }
+  },
+  "BLACKJACK_ROUND_2": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BLACKJACK_ROUND_3"
+    }
+  },
+  "BLACKJACK_ROUND_3": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_06"
+    }
+  },
+  "CHOICE_CONTINUE": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_07"
+    }
+  },
+  "CHOICE_KEEP_PLAYING": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_04"
+    }
+  },
+  "BJ_04": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_05"
+    }
+  },
+  "BJ_05": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_06"
+    }
+  },
+  "BJ_06": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_07"
+    }
+  },
+  "BJ_07": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_08"
+    }
+  },
+  "BJ_08": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_09"
+    }
+  },
+  "BJ_09": {
+    "scene": "BlackjackScene",
+    "data": {
+      "flowId": "BJ_10"
+    }
+  },
+  "BJ_10": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_07A"
+    }
+  },
+  "VN_07A": {
+    "scene": "HiddenEndingScene",
+    "transition": "slideUp"
+  },
+  "VN_07": {
+    "scene": "FirstFightScene",
+    "data": {
+      "flowId": "FIRST_FIGHT_TURN_1"
+    }
+  },
+  "FIRST_FIGHT_TURN_1": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_08"
+    }
+  },
+  "VN_08": {
+    "scene": "FirstFightScene",
+    "data": {
+      "flowId": "FIRST_FIGHT_TURN_2"
+    }
+  },
+  "FIRST_FIGHT_TURN_2": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_09"
+    }
+  },
+  "VN_09": {
+    "scene": "RollDiceScene",
+    "data": {
+      "flowId": "ROLL_DICE_1"
+    }
+  },
+  "ROLL_DICE_1": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_10"
+    }
+  },
+  "VN_10": {
+    "scene": "RollDiceScene",
+    "data": {
+      "flowId": "ROLL_DICE_2"
+    }
+  },
+  "ROLL_DICE_2": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_11"
+    }
+  },
+  "VN_11": {
+    "scene": "LastFightScene",
+    "data": {
+      "flowId": "LAST_FIGHT_ROUND_1"
+    }
+  },
+  "LAST_FIGHT_ROUND_1": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_12"
+    }
+  },
+  "VN_12": {
+    "scene": "LastFightScene",
+    "data": {
+      "flowId": "LAST_FIGHT_ROUND_2"
+    }
+  },
+  "LAST_FIGHT_ROUND_2": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_13"
+    }
+  },
+  "VN_13": {
+    "scene": "LastFightScene",
+    "data": {
+      "flowId": "LAST_FIGHT_ROUND_3"
+    }
+  },
+  "LAST_FIGHT_ROUND_3": {
+    "scene": "VNScene",
+    "data": {
+      "dialogueKey": "VN_14"
+    }
+  },
+  "VN_14": {
+    "scene": "TrueEndingScene",
+    "transition": "slideUp"
+  }
+}

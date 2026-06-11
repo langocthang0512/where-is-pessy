@@ -1,5 +1,11 @@
 import { Logger } from "../utils/logger.js";
 
+const CARD_ASSET_URLS = import.meta.glob("../../assets/cards/deck/*.png", {
+  eager: true,
+  query: "?url",
+  import: "default"
+});
+
 class AssetManager {
   constructor() {
     this.placeholderTextureKey = "asset_placeholder";
@@ -46,6 +52,7 @@ class AssetManager {
     this.createPlaceholderTexture(scene);
     this.installLoadErrorHandler(scene);
     this.queueStoryImages(scene);
+    this.queueCardAssets(scene);
     this.queueAudio(scene);
   }
 
@@ -65,7 +72,16 @@ class AssetManager {
       character_cameldo: new URL("../../assets/characters/Cameldo.png", import.meta.url).href,
       character_pessy: new URL("../../assets/characters/Pessy.png", import.meta.url).href,
       character_dealer: new URL("../../assets/characters/Dealer.png", import.meta.url).href,
-      dragon_king: new URL("../../assets/dragons/StarStripeDragon_PLACEHOLDER.png", import.meta.url).href
+      dragon_king: new URL("../../assets/dragons/star_stripe_adult.png", import.meta.url).href,
+      background_main_menu: new URL("../../assets/backgrounds/MainMenu.webp", import.meta.url).href,
+      background_football_field: new URL("../../assets/backgrounds/FootballField.webp", import.meta.url).href,
+      background_open_sky: new URL("../../assets/backgrounds/SkyKidnap.webp", import.meta.url).href,
+      background_harbor: new URL("../../assets/backgrounds/ShanghaiBund.webp", import.meta.url).href,
+      background_casino: new URL("../../assets/backgrounds/CasinoRoom.webp", import.meta.url).href,
+      background_blackjack_table: new URL("../../assets/backgrounds/BlackjackTable.webp", import.meta.url).href,
+      background_freedumb_land: new URL("../../assets/backgrounds/FreeDumbLand.webp", import.meta.url).href,
+      background_battle: new URL("../../assets/backgrounds/BattleField.webp", import.meta.url).href,
+      background_dice_table: new URL("../../assets/backgrounds/DiceTable.webp", import.meta.url).href
     };
 
     Object.entries(imageAssets).forEach(([key, url]) => {
@@ -73,6 +89,21 @@ class AssetManager {
         scene.load.image(key, url);
       }
     });
+  }
+
+  queueCardAssets(scene) {
+    Object.entries(CARD_ASSET_URLS).forEach(([path, url]) => {
+      const fileName = path.split("/").pop();
+      const key = this.cardTextureKey(fileName);
+
+      if (!scene.textures.exists(key)) {
+        scene.load.image(key, url);
+      }
+    });
+  }
+
+  cardTextureKey(fileName) {
+    return `card_${fileName.replace(/\.png$/i, "")}`;
   }
 
   queueAudio(scene) {

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AssetManager from "../core/AssetManager.js";
 import AudioManager from "../core/AudioManager.js";
 import GameManager from "../core/GameManager.js";
 import SaveManager from "../core/SaveManager.js";
@@ -58,11 +59,10 @@ export class RollDiceScene extends Phaser.Scene {
 
   drawTabletop() {
     const { width, height } = this.scale;
-    const graphics = this.add.graphics();
-    graphics.fillStyle(0x5a3520, 1).fillRect(0, 0, width, height);
-    graphics.fillStyle(0x7a4a2d, 1).fillRoundedRect(260, 120, width - 520, height - 240, 32);
-    graphics.lineStyle(8, 0xf2c14e, 0.55).strokeRoundedRect(260, 120, width - 520, height - 240, 32);
-    graphics.fillStyle(0x3f2416, 0.28).fillEllipse(width / 2, 530, 860, 260);
+    this.add.image(width / 2, height / 2, AssetManager.safeTexture(this, "background_dice_table"))
+      .setDisplaySize(width, height)
+      .setDepth(-100);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x2f1b12, 0.08).setDepth(-90);
 
     this.add.text(width / 2, 130, this.flowId === "ROLL_DICE_1" ? "Roll Dice 1" : "Roll Dice 2", {
       fontFamily: FONT_FAMILY,

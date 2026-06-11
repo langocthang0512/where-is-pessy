@@ -6,6 +6,7 @@ export class DialogueBox {
     const { width, height } = scene.scale;
 
     this.container = scene.add.container(width / 2, height - 180);
+    this.container.setDepth(90);
     this.background = scene.add.rectangle(0, 0, width - 220, 250, COLORS.panel, 0.94);
     this.background.setStrokeStyle(5, COLORS.accent, 1);
 
@@ -23,7 +24,7 @@ export class DialogueBox {
       wordWrap: { width: width - 320 }
     });
 
-    this.promptText = scene.add.text((width - 220) / 2 - 44, 94, "Next", {
+    this.promptText = scene.add.text((width - 220) / 2 - 44, 94, "NEXT", {
       fontFamily: FONT_FAMILY,
       fontSize: "34px",
       color: COLORS.text

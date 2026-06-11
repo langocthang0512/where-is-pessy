@@ -7,6 +7,7 @@ export class UIButton {
     this.onClick = onClick;
     this.isEnabled = true;
     this.container = scene.add.container(x, y);
+    this.container.setDepth(100);
     this.background = scene.add.rectangle(0, 0, width, height, COLORS.accent, 1);
     this.background.setStrokeStyle(4, COLORS.accentDark, 1);
     this.text = scene.add.text(0, 0, label, {

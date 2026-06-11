@@ -1,0 +1,128 @@
+﻿[
+    {
+        "name":  "Fire",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Fire_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Fire_Dragon.png",
+        "asset":  "assets/dragons/official/Fire.png",
+        "bytes":  50156
+    },
+    {
+        "name":  "Wind",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Wind_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Wind_Dragon.png",
+        "asset":  "assets/dragons/official/Wind.png",
+        "bytes":  45023
+    },
+    {
+        "name":  "Earth",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Earth_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Earth_Dragon.png",
+        "asset":  "assets/dragons/official/Earth.png",
+        "bytes":  35901
+    },
+    {
+        "name":  "Water",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Water_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Water_Dragon.png",
+        "asset":  "assets/dragons/official/Water.png",
+        "bytes":  30247
+    },
+    {
+        "name":  "Plant",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Plant_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Plant_Dragon.png",
+        "asset":  "assets/dragons/official/Plant.png",
+        "bytes":  54916
+    },
+    {
+        "name":  "Metal",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Metal_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Metal_Dragon.png",
+        "asset":  "assets/dragons/official/Metal.png",
+        "bytes":  49447
+    },
+    {
+        "name":  "Energy",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Energy_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Energy_Dragon.png",
+        "asset":  "assets/dragons/official/Energy.png",
+        "bytes":  42695
+    },
+    {
+        "name":  "Void",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Void_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Void_Dragon.png",
+        "asset":  "assets/dragons/official/Void.png",
+        "bytes":  60453
+    },
+    {
+        "name":  "Light",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Light_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Light_Dragon.png",
+        "asset":  "assets/dragons/official/Light.png",
+        "bytes":  43876
+    },
+    {
+        "name":  "Shadow",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Shadow_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Shadow_Dragon.png",
+        "asset":  "assets/dragons/official/Shadow.png",
+        "bytes":  66555
+    },
+    {
+        "name":  "ToyFairy",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Toy_Fairy_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Toy_Fairy_Dragon.png",
+        "asset":  "assets/dragons/official/ToyFairy.png",
+        "bytes":  421307
+    },
+    {
+        "name":  "Vulpine",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Vulpine_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Vulpine_Dragon.png",
+        "asset":  "assets/dragons/official/Vulpine.png",
+        "bytes":  88539
+    },
+    {
+        "name":  "Darkfire",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Darkfire_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Darkfire_Dragon.png",
+        "asset":  "assets/dragons/official/Darkfire.png",
+        "bytes":  82881
+    },
+    {
+        "name":  "StarStripeDragon",
+        "form":  "Adult",
+        "status":  "retrieved",
+        "sourcePage":  "https://www.dragon-mania-legends.wiki/wiki/Starstripe_Dragon",
+        "retrievalUrl":  "https://dragonmania.net/assets/images/dragons/adult/Starstripe_Dragon.png",
+        "asset":  "assets/dragons/official/StarStripeDragon.png",
+        "bytes":  499727
+    }
+]

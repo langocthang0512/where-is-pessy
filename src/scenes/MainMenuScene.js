@@ -1,17 +1,19 @@
 import Phaser from "phaser";
+import AssetManager from "../core/AssetManager.js";
 import AudioManager from "../core/AudioManager.js";
-import EventBus from "../core/EventBus.js";
 import GameManager from "../core/GameManager.js";
 import SaveManager from "../core/SaveManager.js";
 import SceneManager from "../core/SceneManager.js";
 import { UIButton } from "../ui/UIButton.js";
-import { COLORS, EVENTS, FONT_FAMILY, SCENE_KEYS, TRANSITIONS } from "../utils/constants.js";
+import { COLORS, FONT_FAMILY, SCENE_KEYS } from "../utils/constants.js";
 import { Logger } from "../utils/logger.js";
 import gameConfig from "../data/gameConfig.json";
 
 export class MainMenuScene extends Phaser.Scene {
   constructor() {
     super(SCENE_KEYS.MAIN_MENU);
+    this.settingsPanel = null;
+    this.cosmeticSettings = { audio: "ON", language: "US" };
   }
 
   create() {
@@ -21,10 +23,10 @@ export class MainMenuScene extends Phaser.Scene {
       AudioManager.setScene(this);
       AudioManager.playBgm("bgm_main_menu");
       GameManager.setCurrentScene(SCENE_KEYS.MAIN_MENU);
+      this.cosmeticSettings = { audio: "ON", language: "US" };
       this.drawBackground();
       this.createTitle();
       this.createMenuButtons();
-      this.createLanguageSelector();
       this.createVersion();
     } catch (error) {
       Logger.error("Main menu failed", error);
@@ -34,22 +36,10 @@ export class MainMenuScene extends Phaser.Scene {
 
   drawBackground() {
     const { width, height } = this.scale;
-    const graphics = this.add.graphics();
-
-    graphics.fillStyle(0xbde0fe, 1).fillRect(0, 0, width, height);
-    graphics.fillStyle(0xfff7df, 0.9).fillCircle(1520, 170, 92);
-    graphics.fillStyle(0x95d5b2, 1).fillRect(0, 675, width, height - 675);
-    graphics.fillStyle(0x78b56f, 1).fillEllipse(1340, 760, 620, 150);
-    graphics.lineStyle(7, 0xfff7df, 0.5).strokeEllipse(1340, 760, 620, 150);
-    graphics.fillStyle(0x6a994e, 1).fillEllipse(1340, 710, 300, 120);
-    graphics.fillEllipse(1220, 670, 114, 88);
-    graphics.fillTriangle(1290, 675, 1380, 545, 1420, 678);
-    graphics.fillTriangle(1355, 680, 1505, 568, 1490, 705);
-    graphics.fillStyle(0xf2c14e, 1);
-    graphics.fillTriangle(1170, 615, 1188, 560, 1210, 620);
-    graphics.fillTriangle(1220, 600, 1245, 545, 1254, 620);
-    graphics.fillStyle(0xfff7df, 1).fillCircle(1200, 664, 9);
-    graphics.lineStyle(10, 0x386641, 1).lineBetween(1485, 735, 1585, 785);
+    this.add.image(width / 2, height / 2, AssetManager.safeTexture(this, "background_main_menu"))
+      .setDisplaySize(width, height)
+      .setDepth(-100);
+    this.add.rectangle(width / 2, height / 2, width, height, 0xfff7df, 0.08).setDepth(-90);
   }
 
   createTitle() {
@@ -57,88 +47,118 @@ export class MainMenuScene extends Phaser.Scene {
 
     this.add.text(width / 2, 155, gameConfig.title, {
       fontFamily: FONT_FAMILY,
-      fontSize: "118px",
+      fontSize: "126px",
       color: "#171923",
-      align: "center"
+      align: "center",
+      stroke: "#fff7df",
+      strokeThickness: 10
     }).setOrigin(0.5);
   }
 
   createMenuButtons() {
-    const menuX = 390;
-    const startY = 360;
+    const menuX = this.scale.width / 2;
+    const hasSave = SaveManager.hasSave();
+    const labels = hasSave
+      ? ["Start The Journey", "Continue Journey", "Game Settings", "Credits"]
+      : ["Start The Journey", "Game Settings", "Credits"];
+    const startY = hasSave ? 360 : 410;
     const spacing = 104;
+    const actions = {
+      "Start The Journey": () => this.startJourney(),
+      "Continue Journey": () => this.continueJourney(),
+      "Game Settings": () => this.showSettings(),
+      Credits: () => SceneManager.changeScene(this, SCENE_KEYS.CREDITS)
+    };
 
-    new UIButton(this, menuX, startY, 460, 78, "Start The Journey", () => {
-      GameManager.reset();
-      SaveManager.save({
-        currentScene: SCENE_KEYS.VN,
-        currentVN: "VN_01"
-      });
-      SceneManager.changeScene(this, SCENE_KEYS.VN, {
-        autoSave: true,
-        data: { dialogueKey: "VN_01" }
-      });
-    });
-
-    const continueButton = new UIButton(this, menuX, startY + spacing, 460, 78, "Continue Journey", () => {
-      const save = SaveManager.load();
-      const targetScene = save?.currentScene || SCENE_KEYS.VN;
-      SceneManager.changeScene(this, targetScene, {
-        autoSave: true,
-        data: {
-          dialogueKey: save?.currentVN,
-          flowId: save?.currentFlowId
-        }
-      });
-    });
-    continueButton.setVisible(SaveManager.hasSave());
-
-    new UIButton(this, menuX, startY + spacing * 2, 460, 78, "Credits", () => {
-      SceneManager.changeScene(this, SCENE_KEYS.CREDITS);
+    labels.forEach((label, index) => {
+      new UIButton(this, menuX, startY + index * spacing, 500, 78, label, actions[label]);
     });
   }
 
-  createLanguageSelector() {
-    const state = GameManager.getState();
-    const y = 700;
+  startJourney() {
+    GameManager.reset();
+    SaveManager.save({
+      currentScene: SCENE_KEYS.VN,
+      currentVN: "VN_01"
+    });
+    SceneManager.changeScene(this, SCENE_KEYS.VN, {
+      autoSave: true,
+      data: { dialogueKey: "VN_01" }
+    });
+  }
 
-    this.add.text(390, y - 62, "Language", {
+  continueJourney() {
+    const save = SaveManager.load();
+    const targetScene = save?.currentScene || SCENE_KEYS.VN;
+    SceneManager.changeScene(this, targetScene, {
+      autoSave: true,
+      data: {
+        dialogueKey: save?.currentVN,
+        flowId: save?.currentFlowId
+      }
+    });
+  }
+
+  showSettings() {
+    this.settingsPanel?.destroy(true);
+    const { width, height } = this.scale;
+    const panel = this.add.container(width / 2, height / 2).setDepth(220);
+    this.settingsPanel = panel;
+
+    const shade = this.add.rectangle(0, 0, width, height, 0x171923, 0.72).setInteractive();
+    const surface = this.add.rectangle(0, 0, 820, 650, 0xfff7df, 0.98).setStrokeStyle(6, COLORS.accentDark, 1);
+    const title = this.add.text(0, -260, "Game Settings", {
       fontFamily: FONT_FAMILY,
-      fontSize: "42px",
+      fontSize: "72px",
       color: "#171923"
     }).setOrigin(0.5);
-
-    this.createLanguageOption(310, y, "US", state.language === "US");
-    this.createLanguageOption(470, y, "UK", state.language === "UK");
-  }
-
-  createLanguageOption(x, y, language, isSelected) {
-    const circle = this.add.circle(x - 44, y, 17, isSelected ? COLORS.accent : COLORS.panelDark, 1);
-    circle.setStrokeStyle(3, COLORS.accent, 1);
-
-    const label = this.add.text(x, y, language, {
+    const audioTitle = this.add.text(-280, -135, "Audio", {
       fontFamily: FONT_FAMILY,
-      fontSize: "40px",
+      fontSize: "48px",
       color: "#171923"
     }).setOrigin(0, 0.5);
-
-    const hitArea = this.add.rectangle(x + 16, y, 120, 54, 0xffffff, 0);
-    hitArea.setInteractive({ useHandCursor: true });
-    hitArea.on("pointerdown", () => {
-      GameManager.setLanguage(language);
-      EventBus.emitEvent(EVENTS.LANGUAGE_CHANGED, { language });
-      SceneManager.changeScene(this, SCENE_KEYS.MAIN_MENU, {
-        transition: TRANSITIONS.NONE
-      });
+    const languageTitle = this.add.text(-280, 80, "Language", {
+      fontFamily: FONT_FAMILY,
+      fontSize: "48px",
+      color: "#171923"
+    }).setOrigin(0, 0.5);
+    const close = this.add.text(350, -270, "X", {
+      fontFamily: FONT_FAMILY,
+      fontSize: "64px",
+      color: "#171923"
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+    close.on("pointerdown", () => {
+      panel.destroy(true);
+      this.settingsPanel = null;
     });
 
-    return { circle, label, hitArea };
+    panel.add([shade, surface, title, audioTitle, languageTitle, close]);
+    this.createSettingOption(panel, -240, -62, "audio", "ON", "ON");
+    this.createSettingOption(panel, -20, -62, "audio", "OFF", "OFF (unplug your headphones)");
+    this.createSettingOption(panel, -240, 155, "language", "US", "US");
+    this.createSettingOption(panel, 30, 155, "language", "UK", "UK");
+  }
+
+  createSettingOption(panel, x, y, group, value, labelText) {
+    const selected = this.cosmeticSettings[group] === value;
+    const circle = this.add.circle(x, y, 17, selected ? COLORS.accent : 0xfff7df, 1).setStrokeStyle(4, COLORS.accentDark, 1);
+    const label = this.add.text(x + 38, y, labelText, {
+      fontFamily: FONT_FAMILY,
+      fontSize: group === "audio" && value === "OFF" ? "32px" : "40px",
+      color: "#171923"
+    }).setOrigin(0, 0.5);
+    const hitArea = this.add.rectangle(x + 115, y, value === "OFF" ? 410 : 190, 64, 0xffffff, 0.001).setInteractive({ useHandCursor: true });
+    hitArea.on("pointerdown", () => {
+      this.cosmeticSettings[group] = value;
+      this.showSettings();
+    });
+    panel.add([circle, label, hitArea]);
   }
 
   createVersion() {
     const { width, height } = this.scale;
 
-    this.add.text(width - 38, height - 34, `Version ${gameConfig.version}`, {
+    this.add.text(width - 38, height - 34, `v${gameConfig.version}`, {
       fontFamily: FONT_FAMILY,
       fontSize: "32px",
       color: "#171923"

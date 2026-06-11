@@ -84,34 +84,15 @@ export class LastFightScene extends Phaser.Scene {
 
   drawBattlefield() {
     const { width, height } = this.scale;
-    const graphics = this.add.graphics();
-    graphics.fillStyle(0x3c1642, 1).fillRect(0, 0, width, height);
-    graphics.fillStyle(0x4b2f54, 1).fillRect(0, 560, width, 520);
-    graphics.fillStyle(0x23172b, 1).fillEllipse(520, 760, 520, 150);
-    graphics.fillStyle(0x23172b, 1).fillEllipse(1340, 470, 600, 170);
-    graphics.lineStyle(7, 0xe45a4f, 0.5).strokeEllipse(520, 760, 520, 150);
-    graphics.lineStyle(7, 0xe45a4f, 0.5).strokeEllipse(1340, 470, 600, 170);
+    this.add.image(width / 2, height / 2, AssetManager.safeTexture(this, "background_battle"))
+      .setDisplaySize(width, height)
+      .setDepth(-100);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x29162f, 0.18).setDepth(-90);
   }
 
   createCharacters() {
-    this.playerSprite = this.add.container(500, 680);
-    const playerBody = this.add.graphics();
-    playerBody.lineStyle(12, 0x171923, 1);
-    playerBody.strokeCircle(0, -90, 34);
-    playerBody.lineBetween(0, -56, 0, 72);
-    playerBody.lineBetween(0, -24, -58, 20);
-    playerBody.lineBetween(0, -24, 58, 20);
-    playerBody.lineBetween(0, 72, -48, 156);
-    playerBody.lineBetween(0, 72, 48, 156);
-    playerBody.fillStyle(0xfff7df, 1);
-    playerBody.fillCircle(-12, -96, 5);
-    playerBody.fillCircle(12, -96, 5);
-    this.playerSprite.add(playerBody);
-
-    this.dragonSprite = this.add.container(1340, 405);
-    const dragonBody = this.add.image(0, 0, AssetManager.safeTexture(this, "dragon_king"));
-    dragonBody.setScale(0.86);
-    this.dragonSprite.add(dragonBody);
+    this.playerSprite = this.add.image(500, 650, AssetManager.safeTexture(this, "character_cameldo")).setScale(0.82);
+    this.dragonSprite = this.add.image(1340, 430, AssetManager.safeTexture(this, "dragon_king")).setScale(0.72);
   }
 
   createBattlePanels() {

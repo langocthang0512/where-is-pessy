@@ -2,65 +2,23 @@
   "sources": {
     "baseDragons": "https://www.dragon-mania-legends.wiki/wiki/Category:Base_Dragons",
     "legendaryDragons": "https://www.dragon-mania-legends.wiki/wiki/Category:Legendary_(classification)",
-    "starStripeDragon": "https://www.dragon-mania-legends.wiki/wiki/Starstripe_Dragon"
+    "starStripeDragon": "https://www.dragon-mania-legends.wiki/wiki/Starstripe_Dragon",
+    "adultArtworkMirror": "https://dragonmania.net/assets/images/dragons/adult/"
   },
   "dragons": {
-    "Fire": {
-      "classification": "Base",
-      "asset": "assets/dragons/Fire_PLACEHOLDER.png"
-    },
-    "Wind": {
-      "classification": "Base",
-      "asset": "assets/dragons/Wind_PLACEHOLDER.png"
-    },
-    "Earth": {
-      "classification": "Base",
-      "asset": "assets/dragons/Earth_PLACEHOLDER.png"
-    },
-    "Water": {
-      "classification": "Base",
-      "asset": "assets/dragons/Water_PLACEHOLDER.png"
-    },
-    "Plant": {
-      "classification": "Base",
-      "asset": "assets/dragons/Plant_PLACEHOLDER.png"
-    },
-    "Metal": {
-      "classification": "Base",
-      "asset": "assets/dragons/Metal_PLACEHOLDER.png"
-    },
-    "Energy": {
-      "classification": "Base",
-      "asset": "assets/dragons/Energy_PLACEHOLDER.png"
-    },
-    "Void": {
-      "classification": "Base",
-      "asset": "assets/dragons/Void_PLACEHOLDER.png"
-    },
-    "Light": {
-      "classification": "Base",
-      "asset": "assets/dragons/Light_PLACEHOLDER.png"
-    },
-    "Shadow": {
-      "classification": "Base",
-      "asset": "assets/dragons/Shadow_PLACEHOLDER.png"
-    },
-    "ToyFairy": {
-      "classification": "Legendary",
-      "asset": "assets/dragons/ToyFairy_PLACEHOLDER.png"
-    },
-    "Vulpine": {
-      "classification": "Legendary",
-      "asset": "assets/dragons/Vulpine_PLACEHOLDER.png"
-    },
-    "Darkfire": {
-      "classification": "Legendary",
-      "asset": "assets/dragons/Darkfire_PLACEHOLDER.png"
-    },
-    "StarStripeDragon": {
-      "classification": "Event",
-      "asset": "assets/dragons/StarStripeDragon_PLACEHOLDER.png",
-      "role": "Dragon King"
-    }
+    "Fire": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Fire.png" },
+    "Wind": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Wind.png" },
+    "Earth": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Earth.png" },
+    "Water": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Water.png" },
+    "Plant": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Plant.png" },
+    "Metal": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Metal.png" },
+    "Energy": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Energy.png" },
+    "Void": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Void.png" },
+    "Light": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Light.png" },
+    "Shadow": { "classification": "Base", "form": "Adult", "asset": "assets/dragons/official/Shadow.png" },
+    "ToyFairy": { "classification": "Legendary", "form": "Adult", "asset": "assets/dragons/official/ToyFairy.png" },
+    "Vulpine": { "classification": "Legendary", "form": "Adult", "asset": "assets/dragons/official/Vulpine.png" },
+    "Darkfire": { "classification": "Legendary", "form": "Adult", "asset": "assets/dragons/official/Darkfire.png" },
+    "StarStripeDragon": { "classification": "Event", "form": "Adult", "asset": "assets/dragons/star_stripe_adult.png", "role": "Dragon King" }
   }
 }

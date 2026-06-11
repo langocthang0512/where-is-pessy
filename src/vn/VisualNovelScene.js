@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AssetManager from "../core/AssetManager.js";
 import AudioManager from "../core/AudioManager.js";
 import EventBus from "../core/EventBus.js";
 import GameManager from "../core/GameManager.js";
@@ -57,12 +58,14 @@ export class VisualNovelScene extends Phaser.Scene {
   }
 
   createLayers() {
-    this.backgroundLayer = this.add.graphics();
+    this.backgroundLayer = this.add.image(this.scale.width / 2, this.scale.height / 2, "background_football_field");
+    this.backgroundLayer.setDisplaySize(this.scale.width, this.scale.height);
+    this.backgroundLayer.setDepth(-100);
     this.setBackground(this.sceneConfig?.background ?? BACKGROUNDS.FOOTBALL_FIELD);
     this.characterLayer = new CharacterLayer(this);
     this.applyInitialCharacters();
     this.dialogueBox = new DialogueBox(this);
-    this.nextButton = new UIButton(this, this.scale.width - 270, this.scale.height - 74, 210, 58, "Next", () => {
+    this.nextButton = new UIButton(this, this.scale.width - 270, this.scale.height - 74, 210, 58, "NEXT", () => {
       this.stopAutoMode();
       this.advanceDialogue();
     });
@@ -111,15 +114,15 @@ export class VisualNovelScene extends Phaser.Scene {
         speaker: "",
         text: "This scene could not load. Returning to the main menu is available."
       });
-      this.dialogueBox.setPrompt("Menu");
+      this.dialogueBox.setPrompt("NEXT");
       return;
     }
 
     const line = this.lines[this.currentIndex];
     this.characterLayer.applyLineDirectives(line);
     this.dialogueBox.setLine(line);
-    this.dialogueBox.setPrompt(this.currentIndex >= this.lines.length - 1 ? "Finish" : "Next");
-    this.nextButton.text.setText(this.currentIndex >= this.lines.length - 1 ? "Finish" : "Next");
+    this.dialogueBox.setPrompt("NEXT");
+    this.nextButton.text.setText("NEXT");
   }
 
   advanceDialogue() {
@@ -203,9 +206,19 @@ export class VisualNovelScene extends Phaser.Scene {
   }
 
   setBackground(textureKey) {
-    this.backgroundLayer.clear();
-    const drawBackground = this.backgroundDrawers[textureKey] ?? this.backgroundDrawers.default;
-    drawBackground.call(this);
+    const backgroundTextures = {
+      [BACKGROUNDS.FOOTBALL_FIELD]: "background_football_field",
+      [BACKGROUNDS.OPEN_SKY]: "background_open_sky",
+      [BACKGROUNDS.HARBOR]: "background_harbor",
+      [BACKGROUNDS.CASINO]: "background_casino",
+      [BACKGROUNDS.BLACKJACK_TABLE]: "background_blackjack_table",
+      [BACKGROUNDS.FREEDUMB_LAND]: "background_freedumb_land",
+      [BACKGROUNDS.FIRST_FIGHT]: "background_battle",
+      [BACKGROUNDS.DICE]: "background_dice_table",
+      [BACKGROUNDS.LAST_FIGHT]: "background_battle"
+    };
+
+    this.backgroundLayer.setTexture(AssetManager.safeTexture(this, backgroundTextures[textureKey] ?? "background_football_field"));
   }
 
   applyInitialCharacters() {

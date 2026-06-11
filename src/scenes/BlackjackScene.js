@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AssetManager from "../core/AssetManager.js";
 import AudioManager from "../core/AudioManager.js";
 import EventBus from "../core/EventBus.js";
 import GameManager from "../core/GameManager.js";
@@ -68,13 +69,10 @@ export class BlackjackScene extends Phaser.Scene {
 
   drawTable() {
     const { width, height } = this.scale;
-    const graphics = this.add.graphics();
-
-    graphics.fillStyle(0x2a1710, 1).fillRect(0, 0, width, height);
-    graphics.fillStyle(0x6b3f22, 1).fillRoundedRect(210, 132, width - 420, height - 244, 28);
-    graphics.lineStyle(10, 0xf2c14e, 0.7).strokeRoundedRect(210, 132, width - 420, height - 244, 28);
-    graphics.fillStyle(0x3f2315, 0.45).fillEllipse(width / 2, height / 2 + 18, 1040, 430);
-    graphics.lineStyle(5, 0xfff7df, 0.3).lineBetween(330, height / 2, width - 330, height / 2);
+    this.add.image(width / 2, height / 2, AssetManager.safeTexture(this, "background_blackjack_table"))
+      .setDisplaySize(width, height)
+      .setDepth(-100);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x171923, 0.16).setDepth(-90);
   }
 
   createStaticText() {
@@ -167,31 +165,10 @@ export class BlackjackScene extends Phaser.Scene {
 
   createCardView(card, x, y) {
     const container = this.add.container(x, y);
-    const background = this.add.rectangle(0, 0, 112, 158, 0xfff7df, 1);
-    background.setStrokeStyle(4, 0x171923, 1);
-    const isRedSuit = card.suit === "Hearts" || card.suit === "Diamonds";
-
-    const rankText = this.add.text(-42, -65, card.rank, {
-      fontFamily: FONT_FAMILY,
-      fontSize: "34px",
-      color: isRedSuit ? "#b02a2a" : "#171923"
-    }).setOrigin(0.5);
-
-    const suitSymbol = this.add.text(0, -22, this.getSuitSymbol(card.suit), {
-      fontFamily: FONT_FAMILY,
-      fontSize: "38px",
-      color: isRedSuit ? "#b02a2a" : "#171923"
-    }).setOrigin(0.5);
-
-    const dragonText = this.add.text(0, 34, card.dragonName, {
-      fontFamily: FONT_FAMILY,
-      fontSize: "24px",
-      color: "#171923",
-      align: "center",
-      wordWrap: { width: 90 }
-    }).setOrigin(0.5);
-
-    container.add([background, rankText, suitSymbol, dragonText]);
+    const shadow = this.add.rectangle(6, 8, 118, 164, 0x171923, 0.35);
+    const cardImage = this.add.image(0, 0, AssetManager.safeTexture(this, AssetManager.cardTextureKey(card.fileName)));
+    cardImage.setDisplaySize(112, 158);
+    container.add([shadow, cardImage]);
     container.setData("fileName", card.fileName);
     return container;
   }
@@ -260,14 +237,4 @@ export class BlackjackScene extends Phaser.Scene {
     this.playerCardViews = [];
   }
 
-  getSuitSymbol(suit) {
-    const symbols = {
-      Hearts: "\u2665",
-      Diamonds: "\u2666",
-      Clubs: "\u2663",
-      Spades: "\u2660"
-    };
-
-    return symbols[suit];
-  }
 }

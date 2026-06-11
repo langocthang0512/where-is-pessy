@@ -32,9 +32,9 @@ export const SceneDatabase = {
     id: "VN_02",
     background: BACKGROUNDS.OPEN_SKY,
     characters: [
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1040, y: 300, scale: 1.12 },
-      { id: "Pessy", texture: CHARACTER_TEXTURES.PESSY, x: 1145, y: 415, scale: 0.62 },
-      { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 680, y: 680, scale: 1.05 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1120, y: 315, scale: 0.72 },
+      { id: "Pessy", texture: CHARACTER_TEXTURES.PESSY, x: 1180, y: 245, scale: 0.35 },
+      { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 650, y: 650, scale: 1.05 }
     ]
   },
   VN_03: {
@@ -88,7 +88,7 @@ export const SceneDatabase = {
     background: BACKGROUNDS.FREEDUMB_LAND,
     characters: [
       { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 650, y: 610, scale: 1.05 },
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1240, y: 520, scale: 1.16 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1280, y: 445, scale: 0.74 }
     ]
   },
   VN_08: {
@@ -96,7 +96,7 @@ export const SceneDatabase = {
     background: BACKGROUNDS.FIRST_FIGHT,
     characters: [
       { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 650, y: 610, scale: 1.05 },
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1240, y: 520, scale: 1.16 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1280, y: 445, scale: 0.74 }
     ]
   },
   VN_09: {
@@ -104,7 +104,7 @@ export const SceneDatabase = {
     background: BACKGROUNDS.FIRST_FIGHT,
     characters: [
       { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 650, y: 610, scale: 1.05 },
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1240, y: 520, scale: 1.16 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1280, y: 445, scale: 0.74 }
     ]
   },
   VN_10: {
@@ -119,21 +119,21 @@ export const SceneDatabase = {
     background: BACKGROUNDS.DICE,
     characters: [
       { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 650, y: 610, scale: 1.05 },
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1240, y: 520, scale: 1.16 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1280, y: 445, scale: 0.74 }
     ]
   },
   VN_12: {
     id: "VN_12",
     background: BACKGROUNDS.LAST_FIGHT,
     characters: [
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1040, y: 520, scale: 1.2 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1040, y: 430, scale: 0.78 }
     ]
   },
   VN_13: {
     id: "VN_13",
     background: BACKGROUNDS.LAST_FIGHT,
     characters: [
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1040, y: 520, scale: 1.2 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1040, y: 430, scale: 0.78 }
     ]
   },
   VN_14: {
@@ -141,7 +141,7 @@ export const SceneDatabase = {
     background: BACKGROUNDS.LAST_FIGHT,
     characters: [
       { id: "Cameldo", texture: CHARACTER_TEXTURES.CAMELDO, x: 650, y: 610, scale: 1.05 },
-      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1240, y: 520, scale: 1.16 }
+      { id: "Dragon King", texture: CHARACTER_TEXTURES.DRAGON_KING, x: 1280, y: 445, scale: 0.74 }
     ]
   }
 };

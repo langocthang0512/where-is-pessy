@@ -31,15 +31,17 @@ class AudioManager {
       return;
     }
 
+    const targetVolume = (config.volume ?? this.bgmVolume) * this.masterVolume;
     this.currentBgm = this.scene.sound.add(key, {
       loop: true,
       volume: 0,
-      ...config
+      ...config,
+      volume: 0
     });
     this.currentBgm.play();
     this.scene.tweens.add({
       targets: this.currentBgm,
-      volume: this.bgmVolume * this.masterVolume,
+      volume: targetVolume,
       duration: config.fadeDuration ?? 600
     });
   }
@@ -58,9 +60,10 @@ class AudioManager {
       return;
     }
 
+    const targetVolume = (config.volume ?? this.sfxVolume) * this.masterVolume;
     this.scene.sound.play(key, {
-      volume: this.sfxVolume * this.masterVolume,
-      ...config
+      ...config,
+      volume: targetVolume
     });
   }
 
@@ -90,7 +93,9 @@ class AudioManager {
       volume: 0,
       duration,
       onComplete: () => {
-        bgm.stop();
+        if (bgm.isPlaying) {
+          bgm.stop();
+        }
         bgm.destroy();
       }
     });

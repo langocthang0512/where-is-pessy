@@ -5,7 +5,15 @@ export class GameStateMachine {
   constructor(initialState = GAME_STATES.MAIN_MENU) {
     this.currentState = initialState;
     this.allowedTransitions = new Map([
-      [GAME_STATES.MAIN_MENU, new Set([GAME_STATES.VN, GAME_STATES.CREDITS])],
+      [GAME_STATES.MAIN_MENU, new Set([
+        GAME_STATES.VN,
+        GAME_STATES.BLACKJACK,
+        GAME_STATES.FIRST_FIGHT,
+        GAME_STATES.ROLL_DICE,
+        GAME_STATES.LAST_FIGHT,
+        GAME_STATES.ENDING,
+        GAME_STATES.CREDITS
+      ])],
       [GAME_STATES.VN, new Set([
         GAME_STATES.MAIN_MENU,
         GAME_STATES.BLACKJACK,

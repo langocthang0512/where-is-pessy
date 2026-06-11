@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AudioManager from "../core/AudioManager.js";
 import EventBus from "../core/EventBus.js";
 import GameManager from "../core/GameManager.js";
 import SaveManager from "../core/SaveManager.js";
@@ -39,6 +40,8 @@ export class VisualNovelScene extends Phaser.Scene {
     try {
       this.cameras.main.fadeIn(350, 23, 25, 35);
       this.cameras.main.setBackgroundColor(COLORS.background);
+      AudioManager.setScene(this);
+      AudioManager.playBgm("bgm_visual_novel");
       GameManager.update({
         currentScene: this.scene.key,
         currentVN: this.dialogueKey
@@ -66,7 +69,7 @@ export class VisualNovelScene extends Phaser.Scene {
     this.choiceMenu = new ChoiceMenu(this);
 
     if (this.lines.length === 0) {
-      this.add.text(this.scale.width / 2, 390, "VN data pending", {
+      this.add.text(this.scale.width / 2, 390, "Dialogue unavailable", {
         fontFamily: FONT_FAMILY,
         fontSize: "64px",
         color: "#f2c14e",
@@ -106,7 +109,7 @@ export class VisualNovelScene extends Phaser.Scene {
     if (this.lines.length === 0) {
       this.dialogueBox.setLine({
         speaker: "",
-        text: "Scenario files are ready. Narrative content will be added in a later phase."
+        text: "This scene could not load. Returning to the main menu is available."
       });
       this.dialogueBox.setPrompt("Menu");
       return;

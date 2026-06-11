@@ -5,7 +5,7 @@ import { Logger } from "../utils/logger.js";
 
 class SaveManager {
   hasSave() {
-    return this.readRawSave() !== null;
+    return this.loadFromStorage({ hydrate: false, clearOnError: true }) !== null;
   }
 
   save(extraState = {}) {
@@ -27,6 +27,13 @@ class SaveManager {
   }
 
   load() {
+    return this.loadFromStorage({ hydrate: true, clearOnError: true });
+  }
+
+  loadFromStorage(options = {}) {
+    const hydrate = options.hydrate ?? true;
+    const clearOnError = options.clearOnError ?? false;
+
     try {
       const rawSave = this.readRawSave();
 
@@ -34,15 +41,40 @@ class SaveManager {
         return null;
       }
 
-      const saveData = JSON.parse(rawSave);
+      const saveData = this.normalizeSaveData(JSON.parse(rawSave));
+
+      if (!this.isValidSaveData(saveData)) {
+        throw new Error("Save data is missing required fields.");
+      }
+
+      if (!hydrate) {
+        return saveData;
+      }
+
       GameManager.hydrate(saveData);
       EventBus.emitEvent(EVENTS.SAVE_LOADED, saveData);
 
       return saveData;
     } catch (error) {
-      Logger.error("Load failed", error);
+      Logger.warn("Load failed", error);
+
+      if (clearOnError) {
+        this.clear();
+      }
+
       return null;
     }
+  }
+
+  normalizeSaveData(saveData = {}) {
+    return {
+      ...GameManager.getState(),
+      ...saveData
+    };
+  }
+
+  isValidSaveData(saveData = {}) {
+    return typeof saveData.currentScene === "string" && saveData.currentScene.length > 0;
   }
 
   clear() {
@@ -61,6 +93,7 @@ class SaveManager {
       currentFlowId: state.currentFlowId,
       chapter: state.chapter,
       blackjackWins: state.blackjackWins,
+      firstFightTurnsCompleted: state.firstFightTurnsCompleted,
       diceRollCount: state.diceRollCount,
       diceProgress: state.diceProgress,
       fightProgress: state.fightProgress,

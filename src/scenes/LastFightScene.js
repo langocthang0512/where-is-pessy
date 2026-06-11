@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AssetManager from "../core/AssetManager.js";
 import AudioManager from "../core/AudioManager.js";
 import EventBus from "../core/EventBus.js";
 import GameManager from "../core/GameManager.js";
@@ -53,8 +54,13 @@ export class LastFightScene extends Phaser.Scene {
 
   create() {
     try {
+      this.sequenceTexts = [];
+      this.countdownEvent = null;
+      this.remainingTime = 0;
+      this.isResolving = false;
       this.cameras.main.fadeIn(250, 23, 25, 35);
       AudioManager.setScene(this);
+      AudioManager.playBgm("bgm_battle");
       this.game = new LastFightGame(this, this.flowId);
 
       GameManager.update({
@@ -90,7 +96,7 @@ export class LastFightScene extends Phaser.Scene {
   createCharacters() {
     this.playerSprite = this.add.container(500, 680);
     const playerBody = this.add.graphics();
-    playerBody.lineStyle(12, 0x3d5a80, 1);
+    playerBody.lineStyle(12, 0x171923, 1);
     playerBody.strokeCircle(0, -90, 34);
     playerBody.lineBetween(0, -56, 0, 72);
     playerBody.lineBetween(0, -24, -58, 20);
@@ -103,19 +109,8 @@ export class LastFightScene extends Phaser.Scene {
     this.playerSprite.add(playerBody);
 
     this.dragonSprite = this.add.container(1340, 405);
-    const dragonBody = this.add.graphics();
-    dragonBody.fillStyle(0x6a994e, 1);
-    dragonBody.fillEllipse(0, 30, 340, 150);
-    dragonBody.fillEllipse(-140, -18, 136, 104);
-    dragonBody.fillTriangle(-72, -6, 25, -145, 72, -8);
-    dragonBody.fillTriangle(12, 0, 182, -120, 168, 38);
-    dragonBody.fillStyle(0xf2c14e, 1);
-    dragonBody.fillTriangle(-196, -74, -180, -142, -152, -68);
-    dragonBody.fillTriangle(-140, -92, -112, -152, -104, -66);
-    dragonBody.fillStyle(0xfff7df, 1);
-    dragonBody.fillCircle(-168, -28, 10);
-    dragonBody.lineStyle(12, 0x386641, 1);
-    dragonBody.lineBetween(142, 54, 266, 112);
+    const dragonBody = this.add.image(0, 0, AssetManager.safeTexture(this, "dragon_king"));
+    dragonBody.setScale(0.86);
     this.dragonSprite.add(dragonBody);
   }
 
@@ -229,7 +224,7 @@ export class LastFightScene extends Phaser.Scene {
     this.sequenceTexts.forEach((text) => text.destroy());
     this.sequenceTexts = snapshot.sequence.map((arrow, index) => {
       const item = this.add.text(760 + index * 100, 910, ARROW_LABELS[arrow], {
-        fontFamily: "Arial",
+        fontFamily: FONT_FAMILY,
         fontSize: "66px",
         color: index < snapshot.inputIndex ? "#5fbf77" : COLORS.text
       }).setOrigin(0.5);

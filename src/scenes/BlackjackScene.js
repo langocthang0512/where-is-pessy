@@ -39,9 +39,14 @@ export class BlackjackScene extends Phaser.Scene {
 
   create() {
     try {
+      this.dealerCardViews = [];
+      this.playerCardViews = [];
+      this.drawButton = null;
+      this.continueButton = null;
       this.cameras.main.fadeIn(250, 23, 25, 35);
       this.cameras.main.setBackgroundColor(0x2a1710);
       AudioManager.setScene(this);
+      AudioManager.playBgm("bgm_blackjack");
       this.game = new BlackjackGame(this, this.flowId);
 
       GameManager.update({
@@ -173,7 +178,7 @@ export class BlackjackScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     const suitSymbol = this.add.text(0, -22, this.getSuitSymbol(card.suit), {
-      fontFamily: "Arial",
+      fontFamily: FONT_FAMILY,
       fontSize: "38px",
       color: isRedSuit ? "#b02a2a" : "#171923"
     }).setOrigin(0.5);

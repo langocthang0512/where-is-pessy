@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import AssetManager from "../core/AssetManager.js";
 import AudioManager from "../core/AudioManager.js";
 import EventBus from "../core/EventBus.js";
 import GameManager from "../core/GameManager.js";
@@ -17,6 +18,8 @@ export class FirstFightScene extends Phaser.Scene {
     this.game = null;
     this.slashButton = null;
     this.hitButton = null;
+    this.slashHitArea = null;
+    this.hitHitArea = null;
     this.playerSprite = null;
     this.dragonSprite = null;
     this.playerHpFill = null;
@@ -35,8 +38,14 @@ export class FirstFightScene extends Phaser.Scene {
 
   create() {
     try {
+      this.isAnimating = false;
+      this.slashButton = null;
+      this.hitButton = null;
+      this.slashHitArea = null;
+      this.hitHitArea = null;
       this.cameras.main.fadeIn(250, 23, 25, 35);
       AudioManager.setScene(this);
+      AudioManager.playBgm("bgm_battle");
       this.game = new FirstFightGame(this, this.flowId);
 
       GameManager.update({
@@ -50,6 +59,7 @@ export class FirstFightScene extends Phaser.Scene {
       this.createCharacters();
       this.createBattlePanels();
       this.createActionButtons();
+      this.createInputFallbacks();
       this.renderSnapshot(this.game.start());
     } catch (error) {
       Logger.error("First Fight scene failed", error);
@@ -72,7 +82,7 @@ export class FirstFightScene extends Phaser.Scene {
   createCharacters() {
     this.playerSprite = this.add.container(500, 680);
     const playerBody = this.add.graphics();
-    playerBody.lineStyle(12, 0x3d5a80, 1);
+    playerBody.lineStyle(12, 0x171923, 1);
     playerBody.strokeCircle(0, -90, 34);
     playerBody.lineBetween(0, -56, 0, 72);
     playerBody.lineBetween(0, -24, -58, 20);
@@ -85,19 +95,8 @@ export class FirstFightScene extends Phaser.Scene {
     this.playerSprite.add(playerBody);
 
     this.dragonSprite = this.add.container(1340, 405);
-    const dragonBody = this.add.graphics();
-    dragonBody.fillStyle(0x6a994e, 1);
-    dragonBody.fillEllipse(0, 30, 340, 150);
-    dragonBody.fillEllipse(-140, -18, 136, 104);
-    dragonBody.fillTriangle(-72, -6, 25, -145, 72, -8);
-    dragonBody.fillTriangle(12, 0, 182, -120, 168, 38);
-    dragonBody.fillStyle(0xf2c14e, 1);
-    dragonBody.fillTriangle(-196, -74, -180, -142, -152, -68);
-    dragonBody.fillTriangle(-140, -92, -112, -152, -104, -66);
-    dragonBody.fillStyle(0xfff7df, 1);
-    dragonBody.fillCircle(-168, -28, 10);
-    dragonBody.lineStyle(12, 0x386641, 1);
-    dragonBody.lineBetween(142, 54, 266, 112);
+    const dragonBody = this.add.image(0, 0, AssetManager.safeTexture(this, "dragon_king"));
+    dragonBody.setScale(0.86);
     this.dragonSprite.add(dragonBody);
   }
 
@@ -134,6 +133,46 @@ export class FirstFightScene extends Phaser.Scene {
     this.add.rectangle(this.scale.width / 2, 965, 900, 160, COLORS.panel, 0.96).setStrokeStyle(5, COLORS.accent, 1);
     this.slashButton = new UIButton(this, 760, 965, 260, 76, "Slash", () => this.handleAttack());
     this.hitButton = new UIButton(this, 1160, 965, 260, 76, "Hit", () => this.handleAttack());
+    this.slashHitArea = this.createAttackHitArea(760, 965, this.slashButton);
+    this.hitHitArea = this.createAttackHitArea(1160, 965, this.hitButton);
+  }
+
+  createAttackHitArea(x, y, button) {
+    const hitArea = this.add.rectangle(x, y, 320, 104, 0xffffff, 0.001).setDepth(20);
+    hitArea.setInteractive({ useHandCursor: true });
+    hitArea.on("pointerover", () => button.setHover(true));
+    hitArea.on("pointerout", () => button.setHover(false));
+    hitArea.on("pointerdown", () => {
+      button.setHover(false);
+      this.handleAttack();
+    });
+    return hitArea;
+  }
+
+  createInputFallbacks() {
+    this.input.off("pointerdown", this.handleActionPanelPointer, this);
+    this.input.keyboard.off("keydown-SPACE", this.handleAttackKey, this);
+    this.input.keyboard.off("keydown-ENTER", this.handleAttackKey, this);
+    this.input.on("pointerdown", this.handleActionPanelPointer, this);
+    this.input.keyboard.on("keydown-SPACE", this.handleAttackKey, this);
+    this.input.keyboard.on("keydown-ENTER", this.handleAttackKey, this);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.input.off("pointerdown", this.handleActionPanelPointer, this);
+      this.input.keyboard.off("keydown-SPACE", this.handleAttackKey, this);
+      this.input.keyboard.off("keydown-ENTER", this.handleAttackKey, this);
+    });
+  }
+
+  handleActionPanelPointer(pointer) {
+    const isInsideActionPanel = pointer.x >= 510 && pointer.x <= 1410 && pointer.y >= 885 && pointer.y <= 1045;
+
+    if (isInsideActionPanel) {
+      this.handleAttack();
+    }
+  }
+
+  handleAttackKey() {
+    this.handleAttack();
   }
 
   renderSnapshot(snapshot) {
@@ -195,12 +234,14 @@ export class FirstFightScene extends Phaser.Scene {
   }
 
   setButtonsEnabled(isEnabled) {
-    this.slashButton.container.disableInteractive();
-    this.hitButton.container.disableInteractive();
+    this.slashButton.setEnabled(isEnabled);
+    this.hitButton.setEnabled(isEnabled);
+    this.slashHitArea?.disableInteractive();
+    this.hitHitArea?.disableInteractive();
 
     if (isEnabled) {
-      this.slashButton.container.setInteractive({ useHandCursor: true });
-      this.hitButton.container.setInteractive({ useHandCursor: true });
+      this.slashHitArea?.setInteractive({ useHandCursor: true });
+      this.hitHitArea?.setInteractive({ useHandCursor: true });
     }
   }
 

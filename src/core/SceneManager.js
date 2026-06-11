@@ -1,7 +1,8 @@
 import EventBus from "./EventBus.js";
 import GameManager from "./GameManager.js";
 import SaveManager from "./SaveManager.js";
-import { EVENTS, GAME_STATES, SCENE_KEYS, TRANSITIONS } from "../utils/constants.js";
+import AudioManager from "./AudioManager.js";
+import { EVENTS, GAME_STATES, MINIGAME_KEYS, SCENE_KEYS, TRANSITIONS } from "../utils/constants.js";
 import { Logger } from "../utils/logger.js";
 
 class SceneManager {
@@ -37,6 +38,11 @@ class SceneManager {
 
       if (options.autoSave) {
         SaveManager.save({ currentScene: targetSceneKey });
+      }
+
+      if ((options.transition ?? TRANSITIONS.FADE) !== TRANSITIONS.NONE) {
+        AudioManager.setScene(currentScene);
+        AudioManager.playSfx("scene_transition", { volume: 0.24 });
       }
 
       this.runTransition(currentScene, targetSceneKey, options);
@@ -83,16 +89,37 @@ class SceneManager {
     if (data.dialogueKey) {
       patch.currentVN = data.dialogueKey;
       patch.currentFlowId = "";
+      patch.currentMinigame = "";
     }
 
     if (data.flowId) {
       patch.currentFlowId = data.flowId;
-      patch.currentMinigame = data.flowId;
+      patch.currentMinigame = this.getMinigameKeyFromFlowId(data.flowId);
     }
 
     if (Object.keys(patch).length > 0) {
       GameManager.update(patch);
     }
+  }
+
+  getMinigameKeyFromFlowId(flowId) {
+    if (flowId.startsWith("BLACKJACK") || flowId.startsWith("BJ_")) {
+      return MINIGAME_KEYS.BLACKJACK;
+    }
+
+    if (flowId.startsWith("FIRST_FIGHT")) {
+      return MINIGAME_KEYS.FIRST_FIGHT;
+    }
+
+    if (flowId.startsWith("ROLL_DICE")) {
+      return MINIGAME_KEYS.ROLL_DICE;
+    }
+
+    if (flowId.startsWith("LAST_FIGHT")) {
+      return MINIGAME_KEYS.LAST_FIGHT;
+    }
+
+    return "";
   }
 
   runTransition(currentScene, targetSceneKey, options) {

@@ -32,6 +32,10 @@ export class RollDiceScene extends Phaser.Scene {
 
   create() {
     try {
+      this.isRolling = false;
+      this.rollButton = null;
+      this.leftDie = null;
+      this.rightDie = null;
       this.cameras.main.fadeIn(250, 23, 25, 35);
       AudioManager.setScene(this);
       this.game = new RollDiceGame(this, this.flowId);

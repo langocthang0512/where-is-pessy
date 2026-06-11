@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "assets": "powershell -ExecutionPolicy Bypass -File scripts/generate-assets.ps1"
   },
   "dependencies": {
     "phaser": "^3.90.0"

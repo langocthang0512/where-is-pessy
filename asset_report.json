@@ -1,0 +1,341 @@
+﻿{
+    "generatedAt":  "2026-06-11T00:49:29.6979314Z",
+    "totalAssets":  123,
+    "totalCards":  52,
+    "requiredCards":  52,
+    "missingAssets":  [
+                          {
+                              "requested":  "assets/dragons/Fire.png",
+                              "fallback":  "assets/dragons/Fire_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Wind.png",
+                              "fallback":  "assets/dragons/Wind_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Earth.png",
+                              "fallback":  "assets/dragons/Earth_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Water.png",
+                              "fallback":  "assets/dragons/Water_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Plant.png",
+                              "fallback":  "assets/dragons/Plant_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Metal.png",
+                              "fallback":  "assets/dragons/Metal_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Energy.png",
+                              "fallback":  "assets/dragons/Energy_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Void.png",
+                              "fallback":  "assets/dragons/Void_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Light.png",
+                              "fallback":  "assets/dragons/Light_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Shadow.png",
+                              "fallback":  "assets/dragons/Shadow_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/ToyFairy.png",
+                              "fallback":  "assets/dragons/ToyFairy_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Vulpine.png",
+                              "fallback":  "assets/dragons/Vulpine_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/Darkfire.png",
+                              "fallback":  "assets/dragons/Darkfire_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          },
+                          {
+                              "requested":  "assets/dragons/StarStripeDragon.png",
+                              "fallback":  "assets/dragons/StarStripeDragon_PLACEHOLDER.png",
+                              "reason":  "External image was not bundled; generated local placeholder."
+                          }
+                      ],
+    "placeholderAssets":  [
+                              "assets/dragons/Fire_PLACEHOLDER.png",
+                              "assets/dragons/Wind_PLACEHOLDER.png",
+                              "assets/dragons/Earth_PLACEHOLDER.png",
+                              "assets/dragons/Water_PLACEHOLDER.png",
+                              "assets/dragons/Plant_PLACEHOLDER.png",
+                              "assets/dragons/Metal_PLACEHOLDER.png",
+                              "assets/dragons/Energy_PLACEHOLDER.png",
+                              "assets/dragons/Void_PLACEHOLDER.png",
+                              "assets/dragons/Light_PLACEHOLDER.png",
+                              "assets/dragons/Shadow_PLACEHOLDER.png",
+                              "assets/dragons/ToyFairy_PLACEHOLDER.png",
+                              "assets/dragons/Vulpine_PLACEHOLDER.png",
+                              "assets/dragons/Darkfire_PLACEHOLDER.png",
+                              "assets/dragons/StarStripeDragon_PLACEHOLDER.png"
+                          ],
+    "failedImports":  [
+
+                      ],
+    "successfulImports":  [
+                              "assets/audio/bgm/battle.wav",
+                              "assets/audio/bgm/blackjack.wav",
+                              "assets/audio/bgm/ending.wav",
+                              "assets/audio/bgm/main_menu.wav",
+                              "assets/audio/bgm/visual_novel.wav",
+                              "assets/audio/music/battle.wav",
+                              "assets/audio/music/blackjack.wav",
+                              "assets/audio/music/ending.wav",
+                              "assets/audio/music/main_menu.wav",
+                              "assets/audio/music/visual_novel.wav",
+                              "assets/audio/sfx/attack.wav",
+                              "assets/audio/sfx/blackjack_victory.wav",
+                              "assets/audio/sfx/button_click.wav",
+                              "assets/audio/sfx/button_hover.wav",
+                              "assets/audio/sfx/card_draw.wav",
+                              "assets/audio/sfx/card_flip.wav",
+                              "assets/audio/sfx/correct_input.wav",
+                              "assets/audio/sfx/dice_roll.wav",
+                              "assets/audio/sfx/dice_stop.wav",
+                              "assets/audio/sfx/first_fight_attack.wav",
+                              "assets/audio/sfx/last_fight_complete.wav",
+                              "assets/audio/sfx/last_fight_correct.wav",
+                              "assets/audio/sfx/last_fight_wrong.wav",
+                              "assets/audio/sfx/round_complete.wav",
+                              "assets/audio/sfx/scene_transition.wav",
+                              "assets/audio/sfx/victory.wav",
+                              "assets/audio/sfx/wrong_input.wav",
+                              "assets/backgrounds/BattleField.png",
+                              "assets/backgrounds/CasinoRoom.png",
+                              "assets/backgrounds/Credits.png",
+                              "assets/backgrounds/DiceTable.png",
+                              "assets/backgrounds/FootballField.png",
+                              "assets/backgrounds/FreeDumbLand.png",
+                              "assets/backgrounds/HiddenEnding.png",
+                              "assets/backgrounds/MainMenu.png",
+                              "assets/backgrounds/ShanghaiBund.png",
+                              "assets/backgrounds/SkyKidnap.png",
+                              "assets/cards/10_Clubs_Shadow.png",
+                              "assets/cards/10_Diamonds_Shadow.png",
+                              "assets/cards/10_Hearts_Shadow.png",
+                              "assets/cards/10_Spades_Shadow.png",
+                              "assets/cards/2_Clubs_Wind.png",
+                              "assets/cards/2_Diamonds_Wind.png",
+                              "assets/cards/2_Hearts_Wind.png",
+                              "assets/cards/2_Spades_Wind.png",
+                              "assets/cards/3_Clubs_Earth.png",
+                              "assets/cards/3_Diamonds_Earth.png",
+                              "assets/cards/3_Hearts_Earth.png",
+                              "assets/cards/3_Spades_Earth.png",
+                              "assets/cards/4_Clubs_Water.png",
+                              "assets/cards/4_Diamonds_Water.png",
+                              "assets/cards/4_Hearts_Water.png",
+                              "assets/cards/4_Spades_Water.png",
+                              "assets/cards/5_Clubs_Plant.png",
+                              "assets/cards/5_Diamonds_Plant.png",
+                              "assets/cards/5_Hearts_Plant.png",
+                              "assets/cards/5_Spades_Plant.png",
+                              "assets/cards/6_Clubs_Metal.png",
+                              "assets/cards/6_Diamonds_Metal.png",
+                              "assets/cards/6_Hearts_Metal.png",
+                              "assets/cards/6_Spades_Metal.png",
+                              "assets/cards/7_Clubs_Energy.png",
+                              "assets/cards/7_Diamonds_Energy.png",
+                              "assets/cards/7_Hearts_Energy.png",
+                              "assets/cards/7_Spades_Energy.png",
+                              "assets/cards/8_Clubs_Void.png",
+                              "assets/cards/8_Diamonds_Void.png",
+                              "assets/cards/8_Hearts_Void.png",
+                              "assets/cards/8_Spades_Void.png",
+                              "assets/cards/9_Clubs_Light.png",
+                              "assets/cards/9_Diamonds_Light.png",
+                              "assets/cards/9_Hearts_Light.png",
+                              "assets/cards/9_Spades_Light.png",
+                              "assets/cards/A_Clubs_Fire.png",
+                              "assets/cards/A_Diamonds_Fire.png",
+                              "assets/cards/A_Hearts_Fire.png",
+                              "assets/cards/A_Spades_Fire.png",
+                              "assets/cards/J_Clubs_ToyFairy.png",
+                              "assets/cards/J_Diamonds_ToyFairy.png",
+                              "assets/cards/J_Hearts_ToyFairy.png",
+                              "assets/cards/J_Spades_ToyFairy.png",
+                              "assets/cards/K_Clubs_Darkfire.png",
+                              "assets/cards/K_Diamonds_Darkfire.png",
+                              "assets/cards/K_Hearts_Darkfire.png",
+                              "assets/cards/K_Spades_Darkfire.png",
+                              "assets/cards/Q_Clubs_Vulpine.png",
+                              "assets/cards/Q_Diamonds_Vulpine.png",
+                              "assets/cards/Q_Hearts_Vulpine.png",
+                              "assets/cards/Q_Spades_Vulpine.png",
+                              "assets/characters/Cameldo.png",
+                              "assets/characters/Dealer.png",
+                              "assets/characters/Pessy.png",
+                              "assets/dragons/Darkfire_PLACEHOLDER.png",
+                              "assets/dragons/Earth_PLACEHOLDER.png",
+                              "assets/dragons/Energy_PLACEHOLDER.png",
+                              "assets/dragons/Fire_PLACEHOLDER.png",
+                              "assets/dragons/Light_PLACEHOLDER.png",
+                              "assets/dragons/Metal_PLACEHOLDER.png",
+                              "assets/dragons/Plant_PLACEHOLDER.png",
+                              "assets/dragons/Shadow_PLACEHOLDER.png",
+                              "assets/dragons/StarStripeDragon_PLACEHOLDER.png",
+                              "assets/dragons/ToyFairy_PLACEHOLDER.png",
+                              "assets/dragons/Void_PLACEHOLDER.png",
+                              "assets/dragons/Vulpine_PLACEHOLDER.png",
+                              "assets/dragons/Water_PLACEHOLDER.png",
+                              "assets/dragons/Wind_PLACEHOLDER.png",
+                              "assets/music/battle.wav",
+                              "assets/music/blackjack.wav",
+                              "assets/music/ending.wav",
+                              "assets/music/main_menu.wav",
+                              "assets/music/visual_novel.wav",
+                              "assets/sfx/attack.wav",
+                              "assets/sfx/button_click.wav",
+                              "assets/sfx/button_hover.wav",
+                              "assets/sfx/card_draw.wav",
+                              "assets/sfx/card_flip.wav",
+                              "assets/sfx/correct_input.wav",
+                              "assets/sfx/dice_roll.wav",
+                              "assets/sfx/dice_stop.wav",
+                              "assets/sfx/round_complete.wav",
+                              "assets/sfx/scene_transition.wav",
+                              "assets/sfx/victory.wav",
+                              "assets/sfx/wrong_input.wav"
+                          ],
+    "cardMapping":  {
+                        "suits":  [
+                                      "Hearts",
+                                      "Diamonds",
+                                      "Clubs",
+                                      "Spades"
+                                  ],
+                        "ranks":  [
+                                      "A",
+                                      "2",
+                                      "3",
+                                      "4",
+                                      "5",
+                                      "6",
+                                      "7",
+                                      "8",
+                                      "9",
+                                      "10",
+                                      "J",
+                                      "Q",
+                                      "K"
+                                  ],
+                        "rankToDragon":  {
+                                             "A":  "Fire",
+                                             "2":  "Wind",
+                                             "3":  "Earth",
+                                             "4":  "Water",
+                                             "5":  "Plant",
+                                             "6":  "Metal",
+                                             "7":  "Energy",
+                                             "8":  "Void",
+                                             "9":  "Light",
+                                             "10":  "Shadow",
+                                             "J":  "ToyFairy",
+                                             "Q":  "Vulpine",
+                                             "K":  "Darkfire"
+                                         },
+                        "rankClassification":  {
+                                                   "A":  "Base",
+                                                   "2":  "Base",
+                                                   "3":  "Base",
+                                                   "4":  "Base",
+                                                   "5":  "Base",
+                                                   "6":  "Base",
+                                                   "7":  "Base",
+                                                   "8":  "Base",
+                                                   "9":  "Base",
+                                                   "10":  "Base",
+                                                   "J":  "Legendary",
+                                                   "Q":  "Legendary",
+                                                   "K":  "Legendary"
+                                               }
+                    },
+    "dragonMapping":  {
+                          "sources":  {
+                                          "baseDragons":  "https://www.dragon-mania-legends.wiki/wiki/Category:Base_Dragons",
+                                          "legendaryDragons":  "https://www.dragon-mania-legends.wiki/wiki/Category:Legendary_(classification)",
+                                          "starStripeDragon":  "https://www.dragon-mania-legends.wiki/wiki/Starstripe_Dragon"
+                                      },
+                          "dragons":  {
+                                          "Fire":  {
+                                                       "classification":  "Base",
+                                                       "asset":  "assets/dragons/Fire_PLACEHOLDER.png"
+                                                   },
+                                          "Wind":  {
+                                                       "classification":  "Base",
+                                                       "asset":  "assets/dragons/Wind_PLACEHOLDER.png"
+                                                   },
+                                          "Earth":  {
+                                                        "classification":  "Base",
+                                                        "asset":  "assets/dragons/Earth_PLACEHOLDER.png"
+                                                    },
+                                          "Water":  {
+                                                        "classification":  "Base",
+                                                        "asset":  "assets/dragons/Water_PLACEHOLDER.png"
+                                                    },
+                                          "Plant":  {
+                                                        "classification":  "Base",
+                                                        "asset":  "assets/dragons/Plant_PLACEHOLDER.png"
+                                                    },
+                                          "Metal":  {
+                                                        "classification":  "Base",
+                                                        "asset":  "assets/dragons/Metal_PLACEHOLDER.png"
+                                                    },
+                                          "Energy":  {
+                                                         "classification":  "Base",
+                                                         "asset":  "assets/dragons/Energy_PLACEHOLDER.png"
+                                                     },
+                                          "Void":  {
+                                                       "classification":  "Base",
+                                                       "asset":  "assets/dragons/Void_PLACEHOLDER.png"
+                                                   },
+                                          "Light":  {
+                                                        "classification":  "Base",
+                                                        "asset":  "assets/dragons/Light_PLACEHOLDER.png"
+                                                    },
+                                          "Shadow":  {
+                                                         "classification":  "Base",
+                                                         "asset":  "assets/dragons/Shadow_PLACEHOLDER.png"
+                                                     },
+                                          "ToyFairy":  {
+                                                           "classification":  "Legendary",
+                                                           "asset":  "assets/dragons/ToyFairy_PLACEHOLDER.png"
+                                                       },
+                                          "Vulpine":  {
+                                                          "classification":  "Legendary",
+                                                          "asset":  "assets/dragons/Vulpine_PLACEHOLDER.png"
+                                                      },
+                                          "Darkfire":  {
+                                                           "classification":  "Legendary",
+                                                           "asset":  "assets/dragons/Darkfire_PLACEHOLDER.png"
+                                                       },
+                                          "StarStripeDragon":  {
+                                                                   "classification":  "Event",
+                                                                   "asset":  "assets/dragons/StarStripeDragon_PLACEHOLDER.png",
+                                                                   "role":  "Dragon King"
+                                                               }
+                                      }
+                      }
+}

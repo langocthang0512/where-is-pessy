@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import DebugManager from "./core/DebugManager.js";
 import { GAME_HEIGHT, GAME_WIDTH } from "./utils/constants.js";
 import { BootScene } from "./scenes/BootScene.js";
 import { PreloadScene } from "./scenes/PreloadScene.js";
@@ -48,4 +49,5 @@ const config = {
   ]
 };
 
-new Phaser.Game(config);
+const game = new Phaser.Game(config);
+DebugManager.install(game);

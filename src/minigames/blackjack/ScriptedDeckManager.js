@@ -1,3 +1,5 @@
+import cardAssetMapping from "../../data/cardAssetMapping.json";
+
 const SUITS = ["Hearts", "Diamonds", "Clubs", "Spades"];
 const TEN_VALUE_RANKS = ["10", "J", "Q", "K"];
 
@@ -54,21 +56,7 @@ const ROUND_SCRIPTS = {
   }
 };
 
-const DRAGON_NAMES = {
-  A: "Fire",
-  2: "Plant",
-  3: "Earth",
-  4: "Water",
-  5: "Energy",
-  6: "Metal",
-  7: "Void",
-  8: "Light",
-  9: "Shadow",
-  10: "Wind",
-  J: "Legend",
-  Q: "Crystal",
-  K: "Apocalypse"
-};
+const DRAGON_NAMES = cardAssetMapping.rankToDragon;
 
 export class ScriptedDeckManager {
   constructor(flowId) {

@@ -62,7 +62,8 @@ export class ScriptedDeckManager {
   constructor(flowId) {
     this.flowId = flowId;
     this.script = ROUND_SCRIPTS[flowId] ?? ROUND_SCRIPTS.BLACKJACK_ROUND_1;
-    this.suitIndex = this.getScriptIndex(flowId);
+    this.suits = this.shuffleSuits();
+    this.suitIndex = 0;
     this.drawIndex = 0;
   }
 
@@ -89,7 +90,7 @@ export class ScriptedDeckManager {
   }
 
   createCard(rank) {
-    const suit = SUITS[this.suitIndex % SUITS.length];
+    const suit = this.suits[this.suitIndex % this.suits.length];
     this.suitIndex += 1;
 
     return {
@@ -111,9 +112,15 @@ export class ScriptedDeckManager {
     })));
   }
 
-  getScriptIndex(flowId) {
-    const keys = Object.keys(ROUND_SCRIPTS);
-    return Math.max(keys.indexOf(flowId), 0);
+  shuffleSuits() {
+    const suits = [...SUITS];
+
+    for (let index = suits.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [suits[index], suits[swapIndex]] = [suits[swapIndex], suits[index]];
+    }
+
+    return suits;
   }
 }
 

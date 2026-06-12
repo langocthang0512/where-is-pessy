@@ -73,6 +73,7 @@ class AssetManager {
       character_pessy: new URL("../../assets/characters/Pessy.png", import.meta.url).href,
       character_dealer: new URL("../../assets/characters/Dealer.png", import.meta.url).href,
       dragon_king: new URL("../../assets/dragons/star_stripe_adult.png", import.meta.url).href,
+      card_back_ancient: new URL("../../assets/cards/Ancient_Card_Back.png", import.meta.url).href,
       background_main_menu: new URL("../../assets/backgrounds/MainMenu.webp", import.meta.url).href,
       background_football_field: new URL("../../assets/backgrounds/FootballField.webp", import.meta.url).href,
       background_open_sky: new URL("../../assets/backgrounds/SkyKidnap.webp", import.meta.url).href,

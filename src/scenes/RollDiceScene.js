@@ -7,7 +7,7 @@ import SceneManager from "../core/SceneManager.js";
 import sceneFlow from "../data/sceneFlow.json";
 import { RollDiceGame, ROLL_DICE_FLOW_IDS } from "../minigames/rolldice/RollDiceGame.js";
 import { UIButton } from "../ui/UIButton.js";
-import { COLORS, FONT_FAMILY, MINIGAME_KEYS, SCENE_KEYS } from "../utils/constants.js";
+import { MINIGAME_KEYS, SCENE_KEYS } from "../utils/constants.js";
 import { Logger } from "../utils/logger.js";
 
 export class RollDiceScene extends Phaser.Scene {
@@ -39,6 +39,7 @@ export class RollDiceScene extends Phaser.Scene {
       this.rightDie = null;
       this.cameras.main.fadeIn(250, 23, 25, 35);
       AudioManager.setScene(this);
+      AudioManager.playBgm("bgm_blackjack", { volume: 0.52 });
       this.game = new RollDiceGame(this, this.flowId);
       GameManager.update({
         currentScene: this.scene.key,
@@ -64,23 +65,19 @@ export class RollDiceScene extends Phaser.Scene {
       .setDepth(-100);
     this.add.rectangle(width / 2, height / 2, width, height, 0x2f1b12, 0.08).setDepth(-90);
 
-    this.add.text(width / 2, 130, this.flowId === "ROLL_DICE_1" ? "Roll Dice 1" : "Roll Dice 2", {
-      fontFamily: FONT_FAMILY,
-      fontSize: "72px",
-      color: COLORS.text
-    }).setOrigin(0.5);
   }
 
   createDice() {
-    this.leftDie = this.createDie(760, 500);
-    this.rightDie = this.createDie(1160, 500);
+    this.leftDie = this.createDie(740, 485);
+    this.rightDie = this.createDie(1180, 485);
   }
 
   createDie(x, y) {
     const container = this.add.container(x, y);
-    const body = this.add.rectangle(0, 0, 210, 210, 0xfff7df, 1);
-    body.setStrokeStyle(6, 0x171923, 1);
-    container.add(body);
+    const shadow = this.add.rectangle(12, 14, 248, 248, 0x171923, 0.38);
+    const body = this.add.rectangle(0, 0, 248, 248, 0xfff7df, 1);
+    body.setStrokeStyle(7, 0x171923, 1);
+    container.add([shadow, body]);
     container.setData("pips", []);
     return container;
   }
@@ -117,7 +114,6 @@ export class RollDiceScene extends Phaser.Scene {
       this.rightDie.angle = 0;
       this.renderSnapshot(snapshot);
       AudioManager.playSfx("dice_stop");
-      this.cameras.main.flash(180, 242, 193, 78);
       this.time.delayedCall(550, () => this.finishRoll());
     });
   }
@@ -136,15 +132,15 @@ export class RollDiceScene extends Phaser.Scene {
 
     const positions = {
       1: [[0, 0]],
-      2: [[-54, -54], [54, 54]],
-      3: [[-54, -54], [0, 0], [54, 54]],
-      4: [[-54, -54], [54, -54], [-54, 54], [54, 54]],
-      5: [[-54, -54], [54, -54], [0, 0], [-54, 54], [54, 54]],
-      6: [[-54, -62], [54, -62], [-54, 0], [54, 0], [-54, 62], [54, 62]]
+      2: [[-64, -64], [64, 64]],
+      3: [[-64, -64], [0, 0], [64, 64]],
+      4: [[-64, -64], [64, -64], [-64, 64], [64, 64]],
+      5: [[-64, -64], [64, -64], [0, 0], [-64, 64], [64, 64]],
+      6: [[-64, -74], [64, -74], [-64, 0], [64, 0], [-64, 74], [64, 74]]
     };
 
     const pips = positions[value].map(([x, y]) => {
-      const pip = this.add.circle(x, y, 14, 0x171923, 1);
+      const pip = this.add.circle(x, y, 17, 0x171923, 1);
       container.add(pip);
       return pip;
     });

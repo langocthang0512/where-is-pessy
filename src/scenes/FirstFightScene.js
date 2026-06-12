@@ -8,6 +8,7 @@ import SceneManager from "../core/SceneManager.js";
 import sceneFlow from "../data/sceneFlow.json";
 import { FirstFightGame, FIRST_FIGHT_FLOW_IDS } from "../minigames/firstfight/FirstFightGame.js";
 import { UIButton } from "../ui/UIButton.js";
+import { BattleHud } from "../ui/BattleHud.js";
 import { COLORS, EVENTS, FONT_FAMILY, MINIGAME_KEYS, SCENE_KEYS } from "../utils/constants.js";
 import { Logger } from "../utils/logger.js";
 
@@ -22,8 +23,7 @@ export class FirstFightScene extends Phaser.Scene {
     this.hitHitArea = null;
     this.playerSprite = null;
     this.dragonSprite = null;
-    this.playerHpFill = null;
-    this.dragonHpFill = null;
+    this.battleHud = null;
     this.isAnimating = false;
   }
 
@@ -75,37 +75,12 @@ export class FirstFightScene extends Phaser.Scene {
   }
 
   createCharacters() {
-    this.playerSprite = this.add.image(500, 650, AssetManager.safeTexture(this, "character_cameldo")).setScale(0.82);
-    this.dragonSprite = this.add.image(1340, 430, AssetManager.safeTexture(this, "dragon_king")).setScale(0.72);
+    this.playerSprite = this.add.image(470, 600, AssetManager.safeTexture(this, "character_cameldo")).setScale(0.82);
+    this.dragonSprite = this.add.image(1360, 410, AssetManager.safeTexture(this, "dragon_king")).setScale(0.76);
   }
 
   createBattlePanels() {
-    this.createNamePanel(180, 122, "Dragon King");
-    this.dragonHpFill = this.createHpBar(400, 232);
-    this.createNamePanel(1160, 720, "Cameldo");
-    this.playerHpFill = this.createHpBar(1380, 830);
-  }
-
-  createNamePanel(x, y, name) {
-    const panel = this.add.rectangle(x, y, 380, 82, COLORS.panel, 0.95);
-    panel.setOrigin(0, 0.5);
-    panel.setStrokeStyle(4, COLORS.accent, 1);
-    this.add.text(x + 28, y, name, {
-      fontFamily: FONT_FAMILY,
-      fontSize: "42px",
-      color: COLORS.text
-    }).setOrigin(0, 0.5);
-  }
-
-  createHpBar(x, y) {
-    const width = 420;
-    const height = 34;
-    const back = this.add.rectangle(x, y, width, height, COLORS.panelDark, 1);
-    back.setOrigin(0, 0.5);
-    back.setStrokeStyle(3, 0x171923, 1);
-    const fill = this.add.rectangle(x, y, width, height, COLORS.success, 1);
-    fill.setOrigin(0, 0.5);
-    return fill;
+    this.battleHud = new BattleHud(this);
   }
 
   createActionButtons() {
@@ -155,8 +130,8 @@ export class FirstFightScene extends Phaser.Scene {
   }
 
   renderSnapshot(snapshot) {
-    this.playerHpFill.width = 420 * snapshot.playerHpPercent;
-    this.dragonHpFill.width = 420 * snapshot.dragonHpPercent;
+    this.battleHud.setPlayerPercent(snapshot.playerHpPercent);
+    this.battleHud.setDragonPercent(snapshot.dragonHpPercent);
   }
 
   handleAttack() {
@@ -190,7 +165,7 @@ export class FirstFightScene extends Phaser.Scene {
     this.showFloatingDamage(snapshot.damageText);
     EventBus.emitEvent(EVENTS.MINIGAME_COMPLETED, this.game.getResult());
 
-    this.time.delayedCall(900, () => {
+    this.time.delayedCall(1250, () => {
       this.finishTurn();
     });
   }
@@ -198,15 +173,17 @@ export class FirstFightScene extends Phaser.Scene {
   showFloatingDamage(text) {
     const damageText = this.add.text(this.dragonSprite.x, this.dragonSprite.y - 180, text, {
       fontFamily: FONT_FAMILY,
-      fontSize: "58px",
-      color: "#ffef7a"
-    }).setOrigin(0.5);
+      fontSize: "92px",
+      color: "#ef4444",
+      stroke: "#5c1111",
+      strokeThickness: 8
+    }).setOrigin(0.5).setDepth(80);
 
     this.tweens.add({
       targets: damageText,
-      y: damageText.y - 100,
+      y: damageText.y - 130,
       alpha: 0,
-      duration: 650,
+      duration: 1150,
       ease: "Sine.easeOut",
       onComplete: () => damageText.destroy()
     });

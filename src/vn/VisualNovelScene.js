@@ -64,12 +64,13 @@ export class VisualNovelScene extends Phaser.Scene {
     this.setBackground(this.sceneConfig?.background ?? BACKGROUNDS.FOOTBALL_FIELD);
     this.characterLayer = new CharacterLayer(this);
     this.applyInitialCharacters();
-    this.dialogueBox = new DialogueBox(this);
+    this.dialogueBox = new DialogueBox(this, () => this.requestAdvance());
     this.nextButton = new UIButton(this, this.scale.width - 270, this.scale.height - 74, 210, 58, "NEXT", () => {
       this.stopAutoMode();
-      this.advanceDialogue();
+      this.requestAdvance();
     });
     this.choiceMenu = new ChoiceMenu(this);
+    this.createSceneDecoration();
 
     if (this.lines.length === 0) {
       this.add.text(this.scale.width / 2, 390, "Dialogue unavailable", {
@@ -105,6 +106,14 @@ export class VisualNovelScene extends Phaser.Scene {
     }
 
     this.stopAutoMode();
+    this.requestAdvance();
+  }
+
+  requestAdvance() {
+    if (this.dialogueBox.revealAll()) {
+      return;
+    }
+
     this.advanceDialogue();
   }
 
@@ -114,14 +123,12 @@ export class VisualNovelScene extends Phaser.Scene {
         speaker: "",
         text: "This scene could not load. Returning to the main menu is available."
       });
-      this.dialogueBox.setPrompt("NEXT");
       return;
     }
 
     const line = this.lines[this.currentIndex];
     this.characterLayer.applyLineDirectives(line);
     this.dialogueBox.setLine(line);
-    this.dialogueBox.setPrompt("NEXT");
     this.nextButton.text.setText("NEXT");
   }
 
@@ -190,7 +197,42 @@ export class VisualNovelScene extends Phaser.Scene {
     this.autoTimer = this.time.addEvent({
       delay: 2000,
       loop: true,
-      callback: () => this.advanceDialogue()
+      callback: () => this.requestAdvance()
+    });
+  }
+
+  createSceneDecoration() {
+    const results = {
+      VN_10: [3, 6],
+      VN_11: [6, 6]
+    };
+    const values = results[this.dialogueKey];
+
+    if (!values) {
+      return;
+    }
+
+    this.drawDie(870, 430, values[0]);
+    this.drawDie(1100, 430, values[1]);
+  }
+
+  drawDie(x, y, value) {
+    const container = this.add.container(x, y).setDepth(6);
+    const shadow = this.add.rectangle(10, 12, 180, 180, 0x171923, 0.35).setStrokeStyle(4, 0x171923, 0.2);
+    const body = this.add.rectangle(0, 0, 180, 180, 0xfff7df, 1).setStrokeStyle(6, 0x171923, 1);
+    container.add([shadow, body]);
+
+    const positions = {
+      1: [[0, 0]],
+      2: [[-46, -46], [46, 46]],
+      3: [[-46, -46], [0, 0], [46, 46]],
+      4: [[-46, -46], [46, -46], [-46, 46], [46, 46]],
+      5: [[-46, -46], [46, -46], [0, 0], [-46, 46], [46, 46]],
+      6: [[-46, -52], [46, -52], [-46, 0], [46, 0], [-46, 52], [46, 52]]
+    };
+
+    positions[value].forEach(([pipX, pipY]) => {
+      container.add(this.add.circle(pipX, pipY, 13, 0x171923, 1));
     });
   }
 

@@ -20,6 +20,7 @@ $requiredAssets = @(
     "assets/characters/Pessy.png",
     "assets/characters/Dealer.png",
     "assets/dragons/star_stripe_adult.png",
+    "assets/cards/Ancient_Card_Back.png",
     "assets/backgrounds/FootballField.webp",
     "assets/backgrounds/SkyKidnap.webp",
     "assets/backgrounds/ShanghaiBund.webp",
@@ -37,7 +38,7 @@ $placeholderCards = @($cardFiles | Where-Object { $_.Name -match "PLACEHOLDER" }
 $failedImports = New-Object System.Collections.Generic.List[object]
 
 foreach ($missingAsset in $missingAssets) {
-    $failedImports.Add([ordered]@{ asset = $missingAsset; error = "Required Build 11.5 asset is missing." })
+    $failedImports.Add([ordered]@{ asset = $missingAsset; error = "Required Build 11.6 asset is missing." })
 }
 
 if ($cardFiles.Count -ne 52) {
@@ -59,7 +60,7 @@ $mapping = Get-Content -Raw (Join-Path $ProjectRoot "src\data\cardAssetMapping.j
 
 $report = [ordered]@{
     generatedAt = (Get-Date).ToUniversalTime().ToString("o")
-    build = "11.5"
+    build = "11.6"
     totalAssets = $allAssets.Count
     totalCards = $cardFiles.Count
     requiredCards = 52
@@ -75,7 +76,7 @@ $report = [ordered]@{
 $report | ConvertTo-Json -Depth 12 | Set-Content -Encoding UTF8 -Path (Join-Path $ProjectRoot "asset_report.json")
 
 if ($failedImports.Count -gt 0) {
-    throw "Build 11.5 asset validation failed with $($failedImports.Count) issue(s)."
+    throw "Build 11.6 asset validation failed with $($failedImports.Count) issue(s)."
 }
 
-Write-Host "Build 11.5 assets validated: $($cardFiles.Count) cards, $(@($officialReport).Count) official adult dragons."
+Write-Host "Build 11.6 assets validated: $($cardFiles.Count) cards, $(@($officialReport).Count) official adult dragons."

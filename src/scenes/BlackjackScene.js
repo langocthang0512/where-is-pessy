@@ -6,7 +6,6 @@ import GameManager from "../core/GameManager.js";
 import SaveManager from "../core/SaveManager.js";
 import SceneManager from "../core/SceneManager.js";
 import sceneFlow from "../data/sceneFlow.json";
-import { FlowNodeDatabase } from "../data/SceneDatabase.js";
 import { BlackjackGame } from "../minigames/blackjack/BlackjackGame.js";
 import { BLACKJACK_FLOW_IDS } from "../minigames/blackjack/ScriptedDeckManager.js";
 import { UIButton } from "../ui/UIButton.js";
@@ -22,7 +21,6 @@ export class BlackjackScene extends Phaser.Scene {
     this.continueButton = null;
     this.dealerCardViews = [];
     this.playerCardViews = [];
-    this.dealerScoreText = null;
     this.playerScoreText = null;
     this.statusText = null;
   }
@@ -76,35 +74,21 @@ export class BlackjackScene extends Phaser.Scene {
   }
 
   createStaticText() {
-    const flowNode = FlowNodeDatabase[this.flowId];
-
-    this.add.text(this.scale.width / 2, 64, flowNode?.title ?? "Blackjack", {
+    this.add.text(240, 110, "THE DEALER", {
       fontFamily: FONT_FAMILY,
-      fontSize: "58px",
-      color: COLORS.text
-    }).setOrigin(0.5);
-
-    this.add.text(320, 170, "Dealer", {
-      fontFamily: FONT_FAMILY,
-      fontSize: "42px",
+      fontSize: "46px",
       color: COLORS.text
     });
 
-    this.add.text(320, 720, "Cameldo", {
+    this.add.text(240, 655, "CAMELDO", {
       fontFamily: FONT_FAMILY,
-      fontSize: "42px",
+      fontSize: "46px",
       color: COLORS.text
     });
 
-    this.dealerScoreText = this.add.text(320, 222, "Score: 0", {
+    this.playerScoreText = this.add.text(240, 712, "Score: 0", {
       fontFamily: FONT_FAMILY,
-      fontSize: "36px",
-      color: "#f2c14e"
-    });
-
-    this.playerScoreText = this.add.text(320, 772, "Score: 0", {
-      fontFamily: FONT_FAMILY,
-      fontSize: "36px",
+      fontSize: "40px",
       color: "#f2c14e"
     });
 
@@ -121,7 +105,7 @@ export class BlackjackScene extends Phaser.Scene {
       this.handleDraw();
     });
 
-    this.continueButton = new UIButton(this, this.scale.width / 2, 950, 320, 76, "Continue", () => {
+    this.continueButton = new UIButton(this, this.scale.width / 2, 950, 320, 76, "NEXT", () => {
       this.finishRound();
     });
     this.continueButton.setVisible(false);
@@ -135,14 +119,26 @@ export class BlackjackScene extends Phaser.Scene {
 
   renderSnapshot(snapshot, isInitialDeal = false, didDraw = false) {
     this.clearCards();
-    this.dealerScoreText.setText(`Score: ${snapshot.dealerScore}`);
     this.playerScoreText.setText(`Score: ${snapshot.playerScore}`);
 
-    this.dealerCardViews = this.renderCards(snapshot.dealerCards, 720, 230);
-    this.playerCardViews = this.renderCards(snapshot.playerCards, 720, 708);
+    this.dealerCardViews = this.renderCards(snapshot.dealerCards, this.scale.width / 2, 260, true);
+    this.playerCardViews = this.renderCards(snapshot.playerCards, this.scale.width / 2, 700, false);
 
     if (isInitialDeal) {
       this.playDealAnimation([...this.dealerCardViews, ...this.playerCardViews]);
+      this.time.delayedCall(190, () => {
+        AudioManager.playSfx("card_flip");
+        this.dealerCardViews.forEach((cardView, index) => {
+          cardView.setScale(0.08, 1);
+          this.tweens.add({
+            targets: cardView,
+            scaleX: 1,
+            delay: index * 55,
+            duration: 180,
+            ease: "Sine.easeOut"
+          });
+        });
+      });
     }
 
     if (didDraw) {
@@ -154,21 +150,25 @@ export class BlackjackScene extends Phaser.Scene {
       return;
     }
 
-    this.statusText.setText("Draw to reach 21.");
+    this.statusText.setText("");
     this.drawButton.setVisible(snapshot.canDraw);
     this.continueButton.setVisible(false);
   }
 
-  renderCards(cards, startX, y) {
-    return cards.map((card, index) => this.createCardView(card, startX + index * 138, y));
+  renderCards(cards, centerX, y, faceDown) {
+    const spacing = 190;
+    const startX = centerX - ((cards.length - 1) * spacing) / 2;
+    return cards.map((card, index) => this.createCardView(card, startX + index * spacing, y, faceDown));
   }
 
-  createCardView(card, x, y) {
+  createCardView(card, x, y, faceDown = false) {
     const container = this.add.container(x, y);
-    const shadow = this.add.rectangle(6, 8, 118, 164, 0x171923, 0.35);
-    const cardImage = this.add.image(0, 0, AssetManager.safeTexture(this, AssetManager.cardTextureKey(card.fileName)));
-    cardImage.setDisplaySize(112, 158);
-    container.add([shadow, cardImage]);
+    const shadow = this.add.rectangle(8, 10, 174, 244, 0x171923, 0.42);
+    const textureKey = faceDown ? "card_back_ancient" : AssetManager.cardTextureKey(card.fileName);
+    const cardImage = this.add.image(0, 0, AssetManager.safeTexture(this, textureKey));
+    cardImage.setDisplaySize(166, 234);
+    const border = this.add.rectangle(0, 0, 170, 238, 0xffffff, 0).setStrokeStyle(4, 0xf6d77a, 1);
+    container.add([shadow, cardImage, border]);
     container.setData("fileName", card.fileName);
     return container;
   }
@@ -219,7 +219,6 @@ export class BlackjackScene extends Phaser.Scene {
     SaveManager.save();
 
     AudioManager.playSfx("blackjack_victory");
-    this.cameras.main.flash(220, 242, 193, 78);
     this.time.delayedCall(420, () => {
       this.continueButton.setVisible(true);
     });

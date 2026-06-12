@@ -7,6 +7,7 @@ import SaveManager from "../core/SaveManager.js";
 import SceneManager from "../core/SceneManager.js";
 import sceneFlow from "../data/sceneFlow.json";
 import { LastFightGame, LAST_FIGHT_FLOW_IDS } from "../minigames/lastfight/LastFightGame.js";
+import { BattleHud } from "../ui/BattleHud.js";
 import { COLORS, EVENTS, FONT_FAMILY, MINIGAME_KEYS, SCENE_KEYS } from "../utils/constants.js";
 import { Logger } from "../utils/logger.js";
 
@@ -31,10 +32,8 @@ export class LastFightScene extends Phaser.Scene {
     this.game = null;
     this.playerSprite = null;
     this.dragonSprite = null;
-    this.playerHpFill = null;
-    this.dragonHpFill = null;
+    this.battleHud = null;
     this.sequenceTexts = [];
-    this.timerText = null;
     this.messageText = null;
     this.countdownEvent = null;
     this.remainingTime = 0;
@@ -91,45 +90,20 @@ export class LastFightScene extends Phaser.Scene {
   }
 
   createCharacters() {
-    this.playerSprite = this.add.image(500, 650, AssetManager.safeTexture(this, "character_cameldo")).setScale(0.82);
-    this.dragonSprite = this.add.image(1340, 430, AssetManager.safeTexture(this, "dragon_king")).setScale(0.72);
+    this.playerSprite = this.add.image(470, 600, AssetManager.safeTexture(this, "character_cameldo")).setScale(0.82);
+    this.dragonSprite = this.add.image(1360, 410, AssetManager.safeTexture(this, "dragon_king")).setScale(0.76);
   }
 
   createBattlePanels() {
-    this.createNamePanel(180, 122, "Dragon King");
-    this.dragonHpFill = this.createHpBar(400, 232);
-    this.createNamePanel(1160, 720, "Cameldo");
-    this.playerHpFill = this.createHpBar(1380, 830);
-  }
-
-  createNamePanel(x, y, name) {
-    const panel = this.add.rectangle(x, y, 380, 82, COLORS.panel, 0.95);
-    panel.setOrigin(0, 0.5);
-    panel.setStrokeStyle(4, COLORS.accent, 1);
-    this.add.text(x + 28, y, name, {
-      fontFamily: FONT_FAMILY,
-      fontSize: "42px",
-      color: COLORS.text
-    }).setOrigin(0, 0.5);
-  }
-
-  createHpBar(x, y) {
-    const width = 420;
-    const height = 34;
-    const back = this.add.rectangle(x, y, width, height, COLORS.panelDark, 1);
-    back.setOrigin(0, 0.5);
-    back.setStrokeStyle(3, 0x171923, 1);
-    const fill = this.add.rectangle(x, y, width, height, COLORS.success, 1);
-    fill.setOrigin(0, 0.5);
-    return fill;
+    this.battleHud = new BattleHud(this);
   }
 
   createRhythmUi() {
-    this.add.rectangle(this.scale.width / 2, 940, 1120, 210, COLORS.panel, 0.96).setStrokeStyle(5, COLORS.accent, 1);
-    this.timerText = this.add.text(480, 860, "0.0", {
+    this.add.rectangle(this.scale.width / 2, 940, 1060, 210, COLORS.panel, 0.96).setStrokeStyle(5, COLORS.accent, 1);
+    this.add.text(this.scale.width / 2, 852, "FOLLOW THE SEQUENCE", {
       fontFamily: FONT_FAMILY,
-      fontSize: "58px",
-      color: COLORS.text
+      fontSize: "34px",
+      color: "#f8d568"
     }).setOrigin(0.5);
     this.messageText = this.add.text(this.scale.width / 2, 1030, "", {
       fontFamily: FONT_FAMILY,
@@ -193,18 +167,18 @@ export class LastFightScene extends Phaser.Scene {
   }
 
   updateTimerText() {
-    this.timerText.setText(this.remainingTime.toFixed(1));
+    // The time limit remains active but is intentionally hidden for presentation.
   }
 
   renderSnapshot(snapshot) {
-    this.playerHpFill.width = 420 * snapshot.playerHpPercent;
-    this.dragonHpFill.width = 420 * snapshot.dragonHpPercent;
+    this.battleHud.setPlayerPercent(snapshot.playerHpPercent);
+    this.battleHud.setDragonPercent(snapshot.dragonHpPercent);
   }
 
   renderSequence(snapshot) {
     this.sequenceTexts.forEach((text) => text.destroy());
     this.sequenceTexts = snapshot.sequence.map((arrow, index) => {
-      const item = this.add.text(760 + index * 100, 910, ARROW_LABELS[arrow], {
+      const item = this.add.text(760 + index * 100, 930, ARROW_LABELS[arrow], {
         fontFamily: FONT_FAMILY,
         fontSize: "66px",
         color: index < snapshot.inputIndex ? "#5fbf77" : COLORS.text
@@ -223,7 +197,6 @@ export class LastFightScene extends Phaser.Scene {
 
     if (snapshot.inputResult === "correct") {
       AudioManager.playSfx("last_fight_correct");
-      this.cameras.main.flash(90, 95, 191, 119);
       this.renderSequence(snapshot);
       return;
     }
@@ -241,7 +214,6 @@ export class LastFightScene extends Phaser.Scene {
     this.isResolving = true;
     this.stopTimer();
     AudioManager.playSfx("last_fight_wrong");
-    this.cameras.main.flash(140, 228, 90, 79);
     this.messageText.setColor("#e45a4f");
     this.messageText.setText("TRY AGAIN");
     this.time.delayedCall(750, () => {
@@ -260,8 +232,7 @@ export class LastFightScene extends Phaser.Scene {
     this.messageText.setColor("#5fbf77");
     this.messageText.setText("SUCCESS");
     this.showFloatingDamage(snapshot.damageText);
-    this.cameras.main.flash(220, 242, 193, 78);
-    this.time.delayedCall(950, () => {
+    this.time.delayedCall(1450, () => {
       this.game.cleanup();
       SceneManager.changeToNextFromFlow(this, sceneFlow, this.flowId, { autoSave: true });
     });
@@ -270,15 +241,17 @@ export class LastFightScene extends Phaser.Scene {
   showFloatingDamage(text) {
     const damageText = this.add.text(this.dragonSprite.x, this.dragonSprite.y - 190, text, {
       fontFamily: FONT_FAMILY,
-      fontSize: "72px",
-      color: "#e45a4f"
-    }).setOrigin(0.5);
+      fontSize: "108px",
+      color: "#ef4444",
+      stroke: "#5c1111",
+      strokeThickness: 10
+    }).setOrigin(0.5).setDepth(80);
 
     this.tweens.add({
       targets: damageText,
-      y: damageText.y - 120,
+      y: damageText.y - 150,
       alpha: 0,
-      duration: 800,
+      duration: 1300,
       ease: "Sine.easeOut",
       onComplete: () => damageText.destroy()
     });
